@@ -2,7 +2,7 @@
 import { WebClient } from "@slack/web-api";
 
 export default async function handler(req, res) {
-  const token = "xoxp-2590481275-4717440584342-4837941913541-94136aea5f3900b47a68c0c20198733b";
+  const token = "thisismytoken";
 
   const web = new WebClient(token);
 
