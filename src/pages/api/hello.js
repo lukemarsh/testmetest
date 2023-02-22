@@ -10,13 +10,9 @@ export default async function handler(req, res) {
     timestamp: req.body.timestamp
   });
 
-  const userGroup = await web.usergroups.create({
-    name: 'testrota',
-  });
-
   await web.usergroups.users.update({
-    usergroup: userGroup.usergroup.id,
-    users: 'UEC3MJXRT'
+    usergroup: "S04QKARLE14",
+    users: req.body.firefighter
   })
   
   res.status(200).json({ name: 'John Doe' })
