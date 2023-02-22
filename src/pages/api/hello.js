@@ -10,10 +10,12 @@ export default async function handler(req, res) {
     timestamp: req.body.timestamp
   });
 
+  const users = [req.body.firefighter, "U2D1SE9FV", "UDPUWG5KK", "UBQRDLJ5A", "UE1F0TZK7", "U04M3CYH6A2"]
+
   await web.usergroups.users.update({
     usergroup: "S04QKARLE14",
-    users: req.body.firefighter
+    users: users.join(),
   })
   
-  res.status(200).json({ name: 'John Doe' })
+  res.status(200);
 }
