@@ -5,6 +5,15 @@ export default async function handler(req, res) {
   const token = process.env.SLACK_TOKEN;
   const web = new WebClient(token);
 
+  const pins = await web.pins.list({
+    channel: req.body.channel,
+  });
+
+  await web.pins.remove({
+    channel: req.body.channel,
+    timestamp: pins.items[0].created
+  });
+
   await web.pins.add({
     channel: req.body.channel,
     timestamp: req.body.timestamp
@@ -17,5 +26,5 @@ export default async function handler(req, res) {
     users: users.join(),
   })
   
-  res.status(200);
+  res.status(200).json({ success: 'great success' })
 }
