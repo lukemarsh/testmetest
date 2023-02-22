@@ -2,7 +2,14 @@
 import { WebClient } from "@slack/web-api";
 
 export default async function handler(req, res) {
-  console.log('REQ', req);
+  console.log('REQ', req.data);
+  console.log('BODY', req.body);
+
+  const rawBody = (await buffer(req)).toString()
+  const data = JSON.parse(rawBody);
+
+  console.log('DATA', data);
+
   const token = process.env.SLACK_TOKEN;
 
   const web = new WebClient(token);
