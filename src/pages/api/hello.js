@@ -9,6 +9,8 @@ export default async function handler(req, res) {
     channel: req.body.channel,
   });
 
+  console.log(pins);
+
   await web.pins.remove({
     channel: req.body.channel,
     timestamp: pins.items[0].created
