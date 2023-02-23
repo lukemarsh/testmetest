@@ -7,7 +7,7 @@ export default async function handler(req, res) {
   const { body : { firefighter, channel, timestamp } } = req;
 
   if (!channel || !firefighter || !timestamp) {
-    throw new Error('Invalid parameters supplied');
+    return res.status(400).send("Invalid parameters supplied");
   }
 
   const users = [
@@ -19,10 +19,15 @@ export default async function handler(req, res) {
     "U04M3CYH6A2"
   ];
   const userGroupId = "S04QKARLE14";
+  let pins = [];
 
-  const pins = await web.pins.list({
-    channel: channel,
-  });
+  try {
+    pins = await web.pins.list({
+      channel: channel,
+    });
+  } catch (error) {
+    return res.status(error.requestResult.statusCode).send(error.message);
+  }
 
   const lastBotPin = pins.items.find(
     p => p.message.username === "Engineering Rota"
@@ -35,7 +40,7 @@ export default async function handler(req, res) {
         timestamp: lastBotPin.message.ts
       });
     } catch (error) {
-      throw new Error(error);
+      return res.status(error.requestResult.statusCode).send(error.message);
     }
   }
 
@@ -45,7 +50,7 @@ export default async function handler(req, res) {
       timestamp: timestamp
     });
   } catch (error) {
-    throw new Error(error);
+    return res.status(error.requestResult.statusCode).send(error.message);
   }
 
   try {
@@ -54,7 +59,7 @@ export default async function handler(req, res) {
       users: users.join(),
     })
   } catch (error) {
-    throw new Error(error);
+    return res.status(error.requestResult.statusCode).send(error.message);
   }
   
   res.status(200).json({ success: 'great success' })

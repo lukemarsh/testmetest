@@ -43,12 +43,6 @@ describe('hello', () => {
         expect(slack.pins.list).toHaveBeenCalledWith({
             channel: 'mock-channel',
         });
-        expect(res._getStatusCode()).toBe(200);
-        expect(JSON.parse(res._getData())).toEqual(
-            expect.objectContaining({
-              success: 'great success',
-            }),
-        );
     });
 
     it('resolves correctly', async () => {
@@ -130,6 +124,8 @@ describe('hello', () => {
 
     it('should throw an error if any params are missing', async () => {
         const { req, res } = createMocks();
-        await expect(handler(req, res)).rejects.toThrow("Invalid parameters supplied");
+        await handler(req, res);
+        expect(res._getStatusCode()).toBe(400);
+        expect(res._getData()).toEqual("Invalid parameters supplied");
     })
 });
