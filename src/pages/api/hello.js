@@ -21,7 +21,7 @@ export default async function handler(req, res) {
 
   console.log('pins', JSON.stringify(pins));
 
-  const lastBotPin = pins.items.find(p => p.message.text.includes("support rotas today"));
+  const lastBotPin = pins.items.find(p => p.message.text.includes("Support rotas today"));
 
   console.log('last bot pin', lastBotPin);
 
