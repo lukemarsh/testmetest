@@ -5,6 +5,11 @@ export default async function handler(req, res) {
   const token = process.env.SLACK_TOKEN;
   const web = new WebClient(token);
   const { body : { firefighter, channel, timestamp } } = req;
+
+  if (!channel || !firefighter || !timestamp) {
+    throw new Error('Invalid parameters supplied');
+  }
+
   const users = [
     firefighter,
     "U2D1SE9FV",
@@ -19,19 +24,19 @@ export default async function handler(req, res) {
     channel: channel,
   });
 
-  console.log('pins', JSON.stringify(pins));
+  const lastBotPin = pins.items.find(
+    p => p.message.username === "Engineering Rota"
+  );
 
-  const lastBotPin = pins.items.find(p => p.message.text.includes("Support rotas today"));
-
-  console.log('last bot pin', lastBotPin);
-
-  try {
-    await web.pins.remove({
-      channel: channel,
-      timestamp: lastBotPin.message.ts
-    });
-  } catch (error) {
-    throw new Error(error);
+  if (lastBotPin) {
+    try {
+      await web.pins.remove({
+        channel: channel,
+        timestamp: lastBotPin.message.ts
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 
   try {
