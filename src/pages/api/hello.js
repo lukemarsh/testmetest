@@ -19,12 +19,16 @@ export default async function handler(req, res) {
     channel: channel,
   });
 
-  console.log(pins);
+  console.log('pins', JSON.stringify(pins));
+
+  const lastBotPin = pins.items.find(p => p.message.includes("support rotas today"));
+
+  console.log('last bot pin', lastBotPin);
 
   try {
     await web.pins.remove({
       channel: channel,
-      timestamp: pins.items[0].message.ts
+      timestamp: lastBotPin.message.ts
     });
   } catch (error) {
     throw new Error(error);
