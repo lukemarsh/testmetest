@@ -1,4 +1,4 @@
-const { default: handler } = require("../pages/api/hello");
+const { default: handler } = require("../pages/api/pinMessage");
 import { createMocks } from 'node-mocks-http';
 import { WebClient } from "@slack/web-api";
 
@@ -35,8 +35,7 @@ describe('hello', () => {
         const { req, res } = createMocks({
             body: {
                 channel: 'mock-channel',
-                timestamp: 'mock-timestamp',
-                firefighter: 'mock-firefighter'
+                timestamp: 'mock-timestamp'
             }
         });
         await handler(req, res);
@@ -49,8 +48,7 @@ describe('hello', () => {
         const { req, res } = createMocks({
             body: {
                 channel: 'mock-channel',
-                timestamp: 'mock-timestamp',
-                firefighter: 'mock-firefighter'
+                timestamp: 'mock-timestamp'
             }
         });
         await handler(req, res);
@@ -66,8 +64,7 @@ describe('hello', () => {
         const { req, res } = createMocks({
             body: {
                 channel: 'mock-channel',
-                timestamp: 'mock-timestamp',
-                firefighter: 'mock-firefighter'
+                timestamp: 'mock-timestamp'
             }
         });
         await handler(req, res);
@@ -84,8 +81,7 @@ describe('hello', () => {
         const { req, res } = createMocks({
             body: {
                 channel: 'mock-channel',
-                timestamp: 'mock-timestamp',
-                firefighter: 'mock-firefighter'
+                timestamp: 'mock-timestamp'
             }
         });
         await handler(req, res);
@@ -96,29 +92,13 @@ describe('hello', () => {
         const { req, res } = createMocks({
             body: {
                 channel: 'mock-channel',
-                timestamp: 'mock-timestamp',
-                firefighter: 'mock-firefighter'
+                timestamp: 'mock-timestamp'
             }
         });
         await handler(req, res);
         expect(slack.pins.add).toHaveBeenCalledWith({
             channel: 'mock-channel',
             timestamp: 'mock-timestamp'
-        });
-    });
-
-    it('should make a call to update user groups', async () => {
-        const { req, res } = createMocks({
-            body: {
-                channel: 'mock-channel',
-                timestamp: 'mock-timestamp',
-                firefighter: 'mock-firefighter'
-            }
-        });
-        await handler(req, res);
-        expect(slack.usergroups.users.update).toHaveBeenCalledWith({
-            usergroup: 'S04QKARLE14',
-            users: 'mock-firefighter,U2D1SE9FV,UDPUWG5KK,UBQRDLJ5A,UE1F0TZK7,U04M3CYH6A2'
         });
     });
 

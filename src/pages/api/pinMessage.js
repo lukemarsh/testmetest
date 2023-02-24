@@ -4,21 +4,12 @@ import { WebClient } from "@slack/web-api";
 export default async function handler(req, res) {
   const token = process.env.SLACK_TOKEN;
   const web = new WebClient(token);
-  const { body : { firefighter, channel, timestamp } } = req;
+  const { body : { channel, timestamp } } = req;
 
-  if (!channel || !firefighter || !timestamp) {
+  if (!channel || !timestamp) {
     return res.status(400).send("Invalid parameters supplied");
   }
 
-  const users = [
-    firefighter,
-    "U2D1SE9FV",
-    "UDPUWG5KK",
-    "UBQRDLJ5A",
-    "UE1F0TZK7",
-    "U04M3CYH6A2"
-  ];
-  const userGroupId = "S04QKARLE14";
   let pins = [];
 
   try {
@@ -53,14 +44,5 @@ export default async function handler(req, res) {
     return res.status(error.requestResult.statusCode).send(error.message);
   }
 
-  try {
-    await web.usergroups.users.update({
-      usergroup: userGroupId,
-      users: users.join(),
-    })
-  } catch (error) {
-    return res.status(error.requestResult.statusCode).send(error.message);
-  }
-  
   res.status(200).json({ success: 'great success' })
 }
