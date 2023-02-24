@@ -17,7 +17,7 @@ export default async function handler(req, res) {
       channel: channel,
     });
   } catch (error) {
-    return res.status(error.requestResult.statusCode).send(error.message);
+    return res.status(500).send(error.message);
   }
 
   const lastBotPin = pins.items.find(
@@ -31,7 +31,7 @@ export default async function handler(req, res) {
         timestamp: lastBotPin.message.ts
       });
     } catch (error) {
-      return res.status(error.requestResult.statusCode).send(error.message);
+      return res.status(500).send(error.message);
     }
   }
 
@@ -41,7 +41,7 @@ export default async function handler(req, res) {
       timestamp: timestamp
     });
   } catch (error) {
-    return res.status(error.requestResult.statusCode).send(error.message);
+    return res.status(500).send(error.message);
   }
 
   res.status(200).json({ success: 'great success' })
