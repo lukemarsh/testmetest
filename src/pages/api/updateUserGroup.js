@@ -10,12 +10,16 @@ export default async function handler(req, res) {
     return res.status(400).send("Invalid parameters supplied");
   }
 
+  console.log('USERS', users, typeof users);
+  console.log('USERGROUP', usergroup, typeof usergroup);
+
   try {
     await web.usergroups.users.update({
       usergroup: usergroup,
       users: users.join(),
     })
   } catch (error) {
+    console.log('ERROR', error);
     return res.status(500).send(error.message);
   }
   
